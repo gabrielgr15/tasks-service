@@ -43,8 +43,16 @@ router.get(
 	async (req, res) =>{
 	const userId = req.user.id
 	try {
-	const tasks = await Task.find({user : userId})
-	return res.status(200).json(tasks)
+		const pageNumber = parseInt(req.query.page)
+		const limitNumber = parseInt(req.query.limit)
+
+		skipValue = (pageNumber - 1) * limitNumber
+
+		const totalTasks = await Task.countDocuments({user : userId})
+		const tasks = await Task.find({user : userId}).sort({ createdAt: -1}).skip(skipValue).limit(limitNumber)
+	
+	
+		return res.status(200).json({totalTasks, tasks})
 }	catch(err){
 	res.status(500).json({error: err})	
 }})
