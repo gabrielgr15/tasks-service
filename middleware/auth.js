@@ -1,6 +1,7 @@
 const axios = require('axios')
 const redisClient = require('../redis/redisClient')
 const jwt = require('jsonwebtoken')
+const logger = require('../logger')
 
 module.exports = async function(req, res, next){
 	const authHeader = req.header('Authorization')
@@ -28,10 +29,10 @@ module.exports = async function(req, res, next){
 	}	else{
 		return res.status(401).json({error : 'Token is not valid (from User Service)'})
 	}}	catch(err){
-		console.error(err)
+		logger.error(err)
 		return res.status(401).json({error : 'Token verification failed with User Service',})
 	}
 	}catch (error){
-		console.error(error)
+		logger.error(error)
 	}
 	}

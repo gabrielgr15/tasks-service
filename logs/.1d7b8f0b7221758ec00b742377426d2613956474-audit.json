@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 7
+    },
+    "auditLog": "/home/gabriel/projects/tasks-service/logs/.1d7b8f0b7221758ec00b742377426d2613956474-audit.json",
+    "files": [
+        {
+            "date": 1743622519292,
+            "name": "/home/gabriel/projects/tasks-service/logs/app-2025-04-02.log",
+            "hash": "5fe1f9e914b4b29850c59628d7fc32309644b1fa64c9405ee9412ed53fa64a19"
+        }
+    ],
+    "hashType": "sha256"
+}

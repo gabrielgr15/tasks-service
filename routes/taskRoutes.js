@@ -2,6 +2,7 @@ const express = require('express')
 const { body, validationResult } = require('express-validator') 
 const Task = require('../models/task')
 const auth = require('../middleware/auth')
+const logger = require('../logger')
 
 const router = express.Router()
 
@@ -20,7 +21,6 @@ router.post(
 }
 	try{
         const userId = req.user.id
-        console.log("Request Body:", req.body); // Add this line
         const { title, status, description } = req.body
 
         let newTask = new Task({
@@ -34,6 +34,7 @@ router.post(
 
 }	
 	catch(err){
+		logger.error(err)
 	res.status(500).json({ error : 'Internal server error'})	
 }})
 
@@ -54,6 +55,7 @@ router.get(
 	
 		return res.status(200).json({totalTasks, tasks})
 }	catch(err){
+	logger.error(err)
 	res.status(500).json({error: err})	
 }})
 
@@ -84,6 +86,7 @@ router.patch(
 	await task.save()
 	return res.status(200).json({ task , msg : 'Task succesfully updated'})
 }	catch(err){
+	logger.error(err)
 	res.status(500).json({ error : err})
 }})
 
@@ -104,7 +107,7 @@ router.delete(
 	return res.status(200).json({msg: 'Task succesfully deleted'})
 }	catch(err){
 	res.status(500).json({error: 'Internal server error'})
-	console.error(err)
+	logger.error(err)
 }})
 
 
